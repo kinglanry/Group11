@@ -1,0 +1,84 @@
++<!DOCTYPE HTML>
++<html>
++
++<head>
++  <title>WebDesignProject</title>
++  <meta name="description" content="website description" />
++  <meta name="keywords" content="website keywords, website keywords" />
++  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
++  <link rel="stylesheet" type="text/css" href="css/style.css" />
++  <!-- modernizr enables HTML5 elements and feature detects -->
++  <script type="text/javascript" src="js/modernizr-1.5.min.js"></script>
++</head>
++
++<body>
++  <div id="main">
++    <header>
++      <div id="logo">
++        <div id="logo_text">
++          <!-- class="logo_colour", allows you to change the colour of the text -->
++          <h1><a href="homepage.html">Web and Database<span class="logo_colour"> project</span></a></h1>
++          <h2>Our Website </h2>
++        </div>
++      </div>
++      <nav>
++        <ul class="sf-menu" id="nav">
++          <li class="selected"><a href="homepage.html">Home</a></li>
++          <!--<li><a href="tasks.html">Tasks</a></li>-->
++          <li><a href="tags.html">Tags</a></li>
++          <li><a href="account.html">Account</a>
++          </li>
++          <li><a href="contact.html">Contact Us</a></li>
++        </ul>
++      </nav>
++    </header>
++    <div id="site_content">
++      <div class="gallery">
++        <ul class="images">
++          <li class="show"><img width="950" height="300" src="images/book.jpg" alt="photo_one" /></li>
++          <li><img width="950" height="300" src="images/pen.jpg" alt="photo_two" /></li>
++          <li><img width="950" height="300" src="images/typing.jpg" alt="photo_three" /></li>
++        </ul>
++      </div>
++      <div id="sidebar_container">
++        
++		<div class="sidebar">
++          <h3><a href="createtask.html">Create a Task<a></h3>
++        </div>
++		
++        <div class="sidebar">
++          <h3>Trending Tags</h3>
++          <ul>
++            <li><a href="#">one</a></li>
++            <li><a href="#">two</a></li>
++            <li><a href="#">three</a></li>
++            <li><a href="#">four</a></li>
++			<li><a href="#">five</a></li>
++          </ul>
++        </div>
++      </div>
++      <div class="content">
++        <h1>Welcome to _______________</h1>
++        <p>Our website facilitates the proofreading of student theses, dissertations, assignments, research papers alike among students and staff. Our main aim for this website is to allow students to publish their academic documents and get them proofread/reviewed by peers. 
++		We hope you enjoy our website and please <a href="contact.html">contact us </a>if you have any questions or problems </p>
++        
++      </div>
++    </div>
++    <footer>
++      <p>Copyright &copy; Group 11. | Designed by James Durcan</a></p>
++    </footer>
++  </div>
++  <p>&nbsp;</p>
++  <!-- javascript at the bottom for fast page loading -->
++  <script type="text/javascript" src="js/jquery.js"></script>
++  <script type="text/javascript" src="js/jquery.easing-sooper.js"></script>
++  <script type="text/javascript" src="js/jquery.sooperfish.js"></script>
+Add a comment to this line
++  <script type="text/javascript" src="js/image_fade.js"></script>
++  <script type="text/javascript">
++    $(document).ready(function() {
++      $('ul.sf-menu').sooperfish();
++    });
++  </script>
++</body>
++</html>
