@@ -1,0 +1,121 @@
+CREATE TABLE IF NOT EXISTS `userdetails` ( 
++    `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT, 
++    `first_name` varchar(128) NOT NULL, 
++    `second_name` varchar(128) NOT NULL, 
++    `email` varchar(128) NOT NULL, 
++    `password` char(128) NOT NULL, 
++    `score` int(2) UNSIGNED NOT NULL,
++    PRIMARY KEY (`user_id`), 
++    UNIQUE KEY `ul_email` (`email`) );
++
++
++CREATE TABLE IF NOT EXISTS `bannedusers` (
++  
++    `banned_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
++    `user_of_id` int(10) UNSIGNED NOT NULL,
++    PRIMARY KEY (`banned_id`),
++    KEY `fk_banned_users` (`user_of_id`),
++    CONSTRAINT `fk_banned_users` FOREIGN KEY (`user_of_id`) REFERENCES `userdetails` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
++    );
++
++
++CREATE TABLE IF NOT EXISTS `Subject_Student` ( 
++    `subject_user_id` int(10) unsigned NOT NULL AUTO_INCREMENT, 
++    `user_subject_id` int(10) unsigned NOT NULL, 
++    `subject_table_id` int(10) unsigned NOT NULL,
++    PRIMARY KEY (`subject_user_id`),
++    KEY `fk_user_id` (`user_subject_id`),
++    KEY `fk_subject_id` (`subject_table_id`),            
++    CONSTRAINT `fk_user_id` FOREIGN KEY (`user_subject_id`) REFERENCES `userdetails` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
++    CONSTRAINT `fk_subject_id` FOREIGN KEY (`subject_table_id`) REFERENCES `subjects` (`subject_id`) ON DELETE CASCADE ON UPDATE CASCADE
++    );
++
++
++
++CREATE TABLE IF NOT EXISTS `Subjects` ( 
++    `subject_id` int(10) unsigned NOT NULL, 
++    `subject_name` varchar(128) NOT NULL, 
++    PRIMARY KEY (`subject_id`)
++    );
++
++
++CREATE TABLE IF NOT EXISTS `Task` ( 
++    `task_id` int(10) unsigned NOT NULL AUTO_INCREMENT, 
++    `user_id` int(10) unsigned NOT NULL, 
++    `title` varchar(128) NOT NULL, 
++    `description` varchar(256) NOT NULL,
++    `file` varbinary(8000) NOT NULL,
++    `pg_num` int(8) unsigned NOT NULL, 
++    `num_words` int(10) NOT NULL, 
++    `deadline_claim` datetime NOT NULL, 
++    `deadline_completion` datetime NOT NULL,    
++    PRIMARY KEY (`task_id`), 
++    KEY `fk_task_users` (`user_id`), 
++    CONSTRAINT `fk_task_users` FOREIGN KEY (`user_id`) REFERENCES `userdetails` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
++    );
++
++
++
++CREATE TABLE IF NOT EXISTS `Progress` ( 
++    `status_id` int(10) unsigned NOT NULL, 
++    `status` enum('Complete','InProgress','Cancelled') NOT NULL, 
++    PRIMARY KEY (`status_id`)
++    );
++
++
++CREATE TABLE IF NOT EXISTS `Task_Progress` ( 
++    `task_id_progress` int(10) unsigned NOT NULL AUTO_INCREMENT, 
++    `task_id` int(10) unsigned NOT NULL, 
++    'time_stamp' datetime NOT NULL,
++    `status_id` int(10) unsigned NOT NULL,
++    PRIMARY KEY (`subject_user_id`),
++    KEY `fk_user_id` (`user_subject_id`),
++    KEY `fk_subject_id` (`subject_table_id`),            
++    CONSTRAINT `fk_user_id` FOREIGN KEY (`user_subject_id`) REFERENCES `userdetails` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
++    CONSTRAINT `fk_subject_id` FOREIGN KEY (`subject_table_id`) REFERENCES `subjects` (`subject_id`) ON DELETE CASCADE ON UPDATE CASCADE
++    );
++
++
++CREATE TABLE IF NOT EXISTS `Claimed_Task` ( 
++    `claimed_task_id` int(10) unsigned NOT NULL AUTO_INCREMENT, 
++    `task_id` int(10) unsigned NOT NULL, 
++    `user_id` int(10) unsigned NOT NULL,
++    PRIMARY KEY (`claimed_task_id`),
++    KEY `fk_task_id_claimed` (`task_id`),
++    KEY `fk_user_id_claimed` (`user_id`),            
++    CONSTRAINT `fk_task_id_claimed` FOREIGN KEY (`task_id`) REFERENCES `task` (`task_id`) ON DELETE CASCADE ON UPDATE CASCADE,
++    CONSTRAINT `fk_user_id_claimed` FOREIGN KEY (`user_id`) REFERENCES `userdetails` (`user_id`) ON DELETE CASCADE ON           UPDATE CASCADE
++    );
++
++
++CREATE TABLE IF NOT EXISTS `Flagged_Tasks` ( 
++    `flagged_task_id` int(10) unsigned NOT NULL AUTO_INCREMENT, 
++    `task_id` int(10) unsigned NOT NULL, 
++    `user_id` int(10) unsigned NOT NULL,
++    `time_stamp_flagged` datetime NOT NULL,
++    PRIMARY KEY (`flagged_task_id`),
++    KEY `fk_task_id_flagged` (`task_id`),
++    KEY `fk_user_id_flagged` (`user_id`),            
++    CONSTRAINT `fk_task_id_flagged` FOREIGN KEY (`task_id`) REFERENCES `task` (`task_id`) ON DELETE CASCADE ON UPDATE CASCADE,
++    CONSTRAINT `fk_user_id_flagged` FOREIGN KEY (`user_id`) REFERENCES `userdetails` (`user_id`) ON DELETE CASCADE ON           UPDATE CASCADE
++    );
++
++
++CREATE TABLE IF NOT EXISTS `Tags` ( 
++    `tag_id` int(10) unsigned NOT NULL AUTO_INCREMENT, 
++    `tag_name` varchar(20) unsigned NOT NULL, 
++    PRIMARY KEY (`tag_id`)
++    );
++
++
++CREATE TABLE IF NOT EXISTS `Task_Tag` ( 
++    `task_tag_id` int(10) unsigned NOT NULL AUTO_INCREMENT, 
++    `task_id` int(10) unsigned NOT NULL, 
++    `tag_id` int(10) unsigned NOT NULL,
+Add a comment to this line
++    PRIMARY KEY (`task_tag_id`),
++    KEY `fk_task_tag` (`task_id`),
++    KEY `fk_tag` (`tag_id`),            
++    CONSTRAINT `fk_task_tag` FOREIGN KEY (`task_id`) REFERENCES `task` (`task_id`) ON DELETE CASCADE ON UPDATE CASCADE,
++    CONSTRAINT `fk_tag` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`tag_id`) ON DELETE CASCADE ON UPDATE CASCADE
++    );
