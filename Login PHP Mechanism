@@ -1,0 +1,67 @@
++<?php
++    session_start();
++	
++	$db =mysqli_connect("localhost", "root", "", "project_website1");
++	
++	if(isset($_POST['login_user_button']))  {
++		
++		
++		$email = mysql_real_escape_string($_POST['email']);
++		$password = mysql_real_escape_string($_POST['password']);
++		
++		$password = md5($password);// Decrypt hash of password stored in database
++		
++		$mySQLQuery = "SELECT * FROM userdetails WHERE email='$email' AND password='$password'";
++		$resultOfQuery = mysqli_query($db, $mySQLQuery);
++		
++		if (mysqli_num_rows($resultOfQuery) == 1) {
++			
++			$_SESSION['message'] = "Hello! You are logged in!";
++			$_SESSION['username'] = $email;
++			header("location: homepage.php");
++		}else{			
++		    $_SESSION['message'] = "Login Fail";
++			
++		}
++		
++		
++		
++		
++	}
++?>
++
++	
++
++
++<!DOCTYPE html>
++<html>
++<head>
++     <title>User Login</title>
++</head>
++<body>
++<div class="header">
++     <h1>User Login</h1>
++</div>
++
++<form method="post" action=User_Login_Page.php>
++   <table>
++     <tr>
++	   <td>email:</td>
++	   <td><input type = "email" name = "email" class="textInput"></td>
++	 </tr>
++	 
++	 <tr>
++	   <td>password:</td>
++	   <td><input type = "password" name = "password" class="textInput"></td>
++	 </tr>
++	 
++	 <tr>
++	     <td></td>
++		 <td><input type="submit" name="login_user_button" value="login"></td>
++     </tr>
++	 
++	</table>
++	</form>
++	 
++</body>
++</html>
