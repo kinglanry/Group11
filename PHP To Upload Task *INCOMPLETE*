@@ -1,0 +1,98 @@
++<?php
++    session_start();
++	
++	$db =mysqli_connect("localhost", "root", "", "project_website1");
++	
++	if(isset($_POST['upload_task']))  {
++		
++		
++	
++        
++        
++		$taskTitle = mysql_real_escape_string($_POST['tasktitle']);
++		$taskDescription = mysql_real_escape_string($_POST['TaskDescription']);
++		$numPages = mysql_real_escape_string($_POST['number_of_pages']);
++		
++		$file = rand(1000,100000)."-".$_FILES['file_document']['name'];
++		$file_loc = $_FILES['file_document']['tmp_name'];
++        $file_size = $_FILES['file_document']['size'];
++        $file_type = $_FILES['file_document']['type'];
++        $folder="uploads/";
++ 
++        move_uploaded_file($file_loc,$folder.$file);
++		
++		$numWords = mysql_real_escape_string($_POST['number_of_words']);
++		$deadlineClaim = mysql_real_escape_string($_POST['deadline_claim']);
++		$deadlineComplete = mysql_real_escape_string($_POST['deadline_complete']);
++		
++		
++		    
++		
++			$sql = "INSERT INTO task(user_id, title, description, file, file_type, file_size, pg_num, num_words, deadline_claim, deadline_completion) VALUES( '1', '$taskTitle', '$taskDescription', '$file', '$file_type', '$file_size', '$numPages', '$numWords', '$deadlineClaim', '$deadlineComplete')";
++			mysqli_query($db, $sql);
++			$_SESSION['message'] = "You have logged in";
++			$_SESSION['tasktitle'] = $taskTitle;
++		
++	}
++
++?>
++
++
++
++<!DOCTYPE html>
++<html>
++<head>
++     <title>Upload Task</title>
++</head>
++<body>
++<div class="header">
++     <h1>Upload Task</h1>
++</div>
++
++<form method="post" action=UserUploadTask.php enctype="multipart/form-data">
++   <table>
++     <tr>
++	   <td>Task Title:</td>
++	   <td><input type = "text" name = "tasktitle" class="textInput"></td>
++	 </tr>
++	 
++	
++	 <tr>
++	   <td>Description:</td>
++	   <td><textarea name="TaskDescription" cols="40" rows="5"></textarea></td>
++	 </tr>
++	 
++	 <tr>
++	   <td>File:</td>
++	   <td><input type="file" name="file_document"></td>
++	 </tr>
++	 
++	 <tr>
++	   <td>Number of Pages:</td>
++	   <td><input type = "number" name = "number_of_pages"></td>
++	 </tr>
++	 
++	 <tr>
++	   <td>Number of Words</td>
++	   <td><input type = "number" name = "number_of_words"></td>
++	 </tr>
++	 
++	 <tr>
++	   <td>Deadline to claim:</td>
++	   <td><input type = "date" name = "deadline_claim"></td>
++	 </tr>
++	 
++	 <tr>
++	   <td>Deadline to complete</td>
++	   <td><input type = "date" name = "deadline_complete"></td>
++	 </tr>
++	 <tr>
++	     <td></td>
++		 <td><input type="submit" name="upload_task" value="Upload"></td>
++     </tr>
++	 
++	</table>
++	</form>
++	 
++</body>
++</html>
