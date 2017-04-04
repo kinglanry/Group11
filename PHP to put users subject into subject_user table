@@ -1,0 +1,21 @@
+<?php
+    session_start();
+	
+	$db =mysqli_connect("localhost", "root", "", "project_website1");
+	
+	if (isset($_POST['submit'])) {
+		$subjectChoice = ($_POST['subjects']);
+		$uid = $_SESSION['user_id'];
+		
+		
+		
+		
+			$sqlquery = "INSERT INTO subject_student(user_subject_id, subject_table_id) VALUES('$uid', '$subjectChoice')";
+			mysqli_query($db, $sqlquery);
+			header("location:User_Home_Page.php ");
+			
+		}else{
+			//failed
+			header("location: User_Registration_Subjects.php");
+		}
+?>
